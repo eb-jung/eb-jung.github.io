@@ -116,26 +116,19 @@
       margin-bottom: 18px;
     }
 
-    .hero-profile {
+    .hero-top {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
+      margin-bottom: 16px;
     }
     
-    .hero-profile img {
-      width: 160px;
-      height: 160px;
+    .profile {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       object-fit: cover;
-    
-      border: 3px solid white;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-    
-      transition: transform 0.25s ease;
-    }
-    
-    .hero-profile img:hover {
-      transform: scale(1.05);
+      border: 2px solid white;
     }
 
     h1 {
@@ -402,7 +395,10 @@
 
     <section class="hero">
       <div class="hero-main">
-        <div class="hero-kicker">Data Science @ UC San Diego</div>
+        <div class="hero-top">
+          <div class="hero-kicker">Data Science @ UC San Diego</div>
+          <img src="assets/profile.png" class="profile" />
+        </div>
         <h1>Building applied ML and analytics systems across finance, behavior, and climate data.</h1>
         <p class="hero-sub">
           I’m Eunbeen Jung, a data science graduate student with a background in ETF analytics, market data workflows, and statistical modeling.
@@ -414,10 +410,6 @@
           <a class="btn btn-primary" href="#projects">View Projects</a>
           <a class="btn btn-secondary" href="https://github.com/eb-jung">GitHub</a>
         </div>
-      </div>
-
-      <div class="hero-profile">
-        <img src="assets/profile.png" alt="Eunbeen Jung" />
       </div>
 
       <div class="hero-side">
