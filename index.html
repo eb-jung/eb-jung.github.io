@@ -3,280 +3,501 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Eunbeen Jung</title>
+  <title>Eunbeen Jung | Data Science Portfolio</title>
 
   <style>
     :root {
+      --bg: #f7f8fb;
+      --bg2: #ffffff;
       --text: #111827;
-      --subtle: #6b7280;
-      --line: #e5e7eb;
-      --bg: #fcfcfd;
-      --card: #ffffff;
+      --muted: #6b7280;
+      --line: rgba(17, 24, 39, 0.08);
       --accent: #2563eb;
+      --accent-soft: rgba(37, 99, 235, 0.12);
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+      --radius: 18px;
     }
 
     * {
       box-sizing: border-box;
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
       font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 28%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 24%),
+        var(--bg);
       line-height: 1.65;
     }
 
     .container {
-      max-width: 860px;
+      max-width: 1050px;
       margin: 0 auto;
-      padding: 56px 24px 80px;
+      padding: 40px 22px 80px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    .nav-name {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav a,
+    a {
+      color: var(--text);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav a::after,
+    .text-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav a:hover::after,
+    .text-link:hover::after {
+      width: 100%;
     }
 
     .hero {
-      padding-bottom: 28px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 40px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 72px;
+    }
+
+    .hero-main,
+    .hero-side,
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-main {
+      padding: 34px;
+    }
+
+    .hero-kicker {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
 
     h1 {
-      font-size: 40px;
-      line-height: 1.1;
-      margin: 0 0 12px 0;
-      color: #111;
+      font-size: clamp(34px, 6vw, 58px);
+      line-height: 1.05;
+      margin: 0 0 14px;
+      letter-spacing: -1.5px;
     }
 
-    .hero-subtitle {
-      font-size: 18px;
-      color: var(--subtle);
-      margin: 0 0 14px 0;
-    }
-
-    .hero-summary {
+    .hero-sub {
+      font-size: 19px;
+      color: var(--muted);
       max-width: 700px;
+      margin: 0 0 20px;
+    }
+
+    .hero-copy {
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 0 26px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .hero-side {
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .mini-block h3 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    .mini-block p {
       margin: 0;
       font-size: 16px;
     }
 
-    h2 {
-      font-size: 24px;
-      margin-top: 42px;
-      margin-bottom: 14px;
-      color: #111;
+    .section {
+      margin-bottom: 72px;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.7s ease forwards;
     }
 
-    p {
-      margin-top: 0;
-      margin-bottom: 14px;
+    .section:nth-of-type(2) { animation-delay: 0.08s; }
+    .section:nth-of-type(3) { animation-delay: 0.14s; }
+    .section:nth-of-type(4) { animation-delay: 0.2s; }
+    .section:nth-of-type(5) { animation-delay: 0.26s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    .experience-card,
-    .project-card,
-    .link-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 20px 22px;
-      margin-bottom: 18px;
-    }
-
-    .role-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .role-meta {
+    .section-title {
       font-size: 14px;
-      color: var(--subtle);
-      margin-bottom: 14px;
-    }
-
-    ul {
-      margin: 10px 0 0 18px;
-      padding: 0;
-    }
-
-    li {
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
       margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-size: 32px;
+      margin: 0 0 20px;
+      letter-spacing: -0.8px;
     }
 
     .projects-grid {
       display: grid;
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
-    .project-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
+    .project-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(17,24,39,0.06);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(17,24,39,0.12);
+      border-color: rgba(37, 99, 235, 0.18);
+    }
+
+    .project-card h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      letter-spacing: -0.4px;
+    }
+
+    .project-card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tag {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: var(--muted);
     }
 
     .project-links {
-      margin-bottom: 10px;
+      display: flex;
+      gap: 14px;
       font-size: 14px;
-      color: var(--subtle);
+      font-weight: 700;
     }
 
-    .interest-list li,
-    .link-list li {
-      margin-bottom: 8px;
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
     }
 
-    .video-wrap {
-      margin-bottom: 28px;
+    .card {
+      padding: 24px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .card p {
+      margin-top: 0;
+      color: var(--muted);
+    }
+
+    .bullets {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .bullets li {
+      margin-bottom: 10px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
     }
 
     iframe {
       width: 100%;
-      max-width: 720px;
       aspect-ratio: 16 / 9;
-      height: auto;
       border: 0;
-      border-radius: 12px;
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .two-col,
+      .projects-grid,
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 640px) {
       .container {
-        padding: 36px 18px 60px;
+        padding: 24px 16px 56px;
       }
 
-      h1 {
-        font-size: 32px;
+      .nav {
+        gap: 12px;
+        flex-direction: column;
+        align-items: flex-start;
       }
 
-      .hero-subtitle {
-        font-size: 16px;
+      .hero-main,
+      .hero-side,
+      .card,
+      .project-card {
+        padding: 20px;
       }
 
-      h2 {
-        font-size: 22px;
+      .section-heading {
+        font-size: 26px;
       }
 
-      .experience-card,
-      .project-card,
-      .link-card {
-        padding: 18px;
+      .hero-sub {
+        font-size: 17px;
       }
     }
   </style>
 </head>
-
 <body>
   <div class="container">
+    <nav class="nav">
+      <div class="nav-name">Eunbeen Jung</div>
+      <div class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#media">Media</a>
+        <a href="https://github.com/eb-jung">GitHub</a>
+      </div>
+    </nav>
 
     <section class="hero">
-      <h1>Eunbeen Jung</h1>
-      <p class="hero-subtitle">M.S. in Data Science, UC San Diego</p>
-      <p class="hero-summary">
-        I am a graduate student in Data Science at UC San Diego with 4+ years of experience in ETF strategy, market data analysis, and workflow automation.
-        My work sits at the intersection of machine learning, statistical modeling, and real-world decision systems across finance, user behavior, and climate data.
-      </p>
+      <div class="hero-main">
+        <div class="hero-kicker">Data Science @ UC San Diego</div>
+        <h1>Building applied ML and analytics systems across finance, behavior, and climate data.</h1>
+        <p class="hero-sub">
+          I’m Eunbeen Jung, a data science graduate student with a background in ETF analytics, market data workflows, and statistical modeling.
+        </p>
+        <p class="hero-copy">
+          My portfolio focuses on interpretable modeling, data products, recommendation systems, and real-world analytical workflows that connect technical methods to decisions.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-secondary" href="https://github.com/eb-jung">GitHub</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="mini-block">
+          <h3>Focus</h3>
+          <p>Machine Learning, Statistical Modeling, Recommendation Systems</p>
+        </div>
+        <div class="mini-block">
+          <h3>Background</h3>
+          <p>ETF analytics, financial data workflows, product strategy</p>
+        </div>
+        <div class="mini-block">
+          <h3>Current</h3>
+          <p>M.S. in Data Science at UC San Diego</p>
+        </div>
+      </div>
     </section>
 
-    <section>
-      <h2>About</h2>
-      <p>
-        Before starting graduate school, I worked in ETF management and analytics, where I analyzed large-scale market and transaction data,
-        developed thematic investment products, and built Python-based workflows to improve research and operations.
-      </p>
-      <p>
-        I am especially interested in machine learning applications involving structured data, time series, recommendation systems, and interpretable modeling.
-      </p>
+    <section class="section" id="projects">
+      <div class="section-title">Selected Work</div>
+      <h2 class="section-heading">Projects</h2>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Global Temperature Prediction</h3>
+          <p>
+            Modeled global and regional temperature change from cumulative CO2 emissions using climate simulation data, xarray, and interpretable regression analysis.
+          </p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">xarray</span>
+            <span class="tag">NetCDF</span>
+            <span class="tag">Regression</span>
+          </div>
+          <div class="project-links">
+            <a class="text-link" href="https://github.com/eb-jung/global-temperature-prediction">GitHub</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>Bike Demand Forecasting</h3>
+          <p>
+            Built regression models for bike-sharing demand using weather and temporal features, including nonlinear effects and seasonal interactions.
+          </p>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">Pandas</span>
+            <span class="tag">OLS</span>
+            <span class="tag">Feature Engineering</span>
+          </div>
+          <div class="project-links">
+            <a class="text-link" href="https://github.com/eb-jung/bike-demand-modeling">GitHub</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <h3>CosmeTik Recommendation System</h3>
+          <p>
+            Developed a recommendation pipeline over skincare product and review data using relational modeling, graph signals, and semantic retrieval.
+          </p>
+          <div class="tags">
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">Neo4j</span>
+            <span class="tag">Qdrant</span>
+            <span class="tag">Recommendations</span>
+          </div>
+          <div class="project-links">
+            <a class="text-link" href="https://github.com/eb-jung">GitHub</a>
+          </div>
+        </article>
+      </div>
     </section>
 
-    <section>
-      <h2>Experience</h2>
+    <section class="section two-col" id="about">
+      <div class="card">
+        <div class="section-title">About</div>
+        <h2 class="section-heading" style="font-size:28px; margin-top:0;">What I work on</h2>
+        <p>
+          I’m interested in machine learning systems that are useful, interpretable, and grounded in real data. My work spans tabular modeling, behavioral data, recommendation systems, and domain-driven analytics.
+        </p>
+        <p>
+          Before graduate school, I worked in ETF analytics and data-heavy investment workflows, where I analyzed large-scale market and transaction data, built Python pipelines, and supported product strategy through quantitative analysis.
+        </p>
+      </div>
 
-      <div class="experience-card">
-        <div class="role-title">ETF Management | Data & Analytics</div>
-        <div class="role-meta">Mirae Asset Global Investments · Oct 2021 – Jul 2025</div>
-        <ul>
-          <li>
-            Analyzed market disclosures, earnings materials, and industry data to identify emerging investment themes and support the launch of 11 thematic equity ETFs, contributing to AUM growth from $230M to $640M.
-          </li>
-          <li>
-            Analyzed $13.7B in transaction-level securities lending and redemption data to detect demand patterns and pricing inefficiencies, increasing revenue by 2.5x YoY.
-          </li>
-          <li>
-            Built Python-based data pipelines integrating Bloomberg, FnGuide, and internal datasets, reducing manual processing by 25+ hours per week across 100+ funds.
-          </li>
+      <div class="card">
+        <div class="section-title">Background</div>
+        <h3>ETF Management | Data & Analytics</h3>
+        <ul class="bullets">
+          <li>Supported 11 thematic ETF launches through data-driven market and industry analysis</li>
+          <li>Analyzed $13.7B in transaction-level activity to identify inefficiencies and demand patterns</li>
+          <li>Built Python-based workflows integrating financial data across 100+ funds</li>
         </ul>
       </div>
     </section>
 
-    <section>
-      <h2>Projects</h2>
-
-      <div class="projects-grid">
-        <div class="project-card">
-          <div class="project-title">Global Temperature Prediction from CO2 Emissions</div>
-          <div class="project-links">
-            <a href="https://github.com/eb-jung/global-temperature-prediction">GitHub</a>
-          </div>
-          <p>
-            Modeled the relationship between cumulative CO2 emissions and global temperature using climate simulation data, xarray, and regression analysis.
-            Extended the analysis from global mean warming to country-level temperature responses.
-          </p>
-        </div>
-
-        <div class="project-card">
-          <div class="project-title">Bike Demand Forecasting</div>
-          <div class="project-links">
-            <a href="https://github.com/eb-jung/bike-demand-modeling">GitHub</a>
-          </div>
-          <p>
-            Built regression models for bike-sharing demand using weather and temporal features, with nonlinear temperature terms and seasonal interactions
-            to improve predictive accuracy and interpret user behavior patterns.
-          </p>
-        </div>
-
-        <div class="project-card">
-          <div class="project-title">CosmeTik / Skincare Recommendation System</div>
-          <div class="project-links">
-            <a href="https://github.com/eb-jung">GitHub</a>
-          </div>
-          <p>
-            Developed a recommendation pipeline over skincare product and review data using relational modeling, graph-based signals, and semantic retrieval
-            to support personalized product discovery.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Research Interests</h2>
-      <ul class="interest-list">
-        <li>Machine Learning and Statistical Modeling</li>
-        <li>Recommendation Systems and Behavioral Data</li>
-        <li>Applied Data Science in Finance and Real-World Systems</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>Talks / Media</h2>
-      <p>
-        Selected talks from my work in ETF strategy and technology-themed market research. Presentations are in Korean.
-      </p>
-
-      <div class="video-wrap">
+    <section class="section" id="media">
+      <div class="section-title">Talks / Media</div>
+      <h2 class="section-heading">Selected presentations</h2>
+      <div class="video-grid">
         <iframe
           src="https://www.youtube.com/embed/u-B0SulhhoU"
           title="YouTube video 1"
           allowfullscreen>
         </iframe>
-      </div>
 
-      <div class="video-wrap">
         <iframe
           src="https://www.youtube.com/embed/RwdNUjEua7w"
           title="YouTube video 2"
@@ -285,16 +506,14 @@
       </div>
     </section>
 
-    <section>
-      <h2>Links</h2>
-      <div class="link-card">
-        <ul class="link-list">
-          <li><a href="https://github.com/eb-jung">GitHub</a></li>
-          <li><a href="https://www.linkedin.com/">LinkedIn</a></li>
-        </ul>
+    <section class="section">
+      <div class="section-title">Links</div>
+      <h2 class="section-heading">Find me online</h2>
+      <div class="footer-links">
+        <a class="text-link" href="https://github.com/eb-jung">GitHub</a>
+        <a class="text-link" href="https://www.linkedin.com/">LinkedIn</a>
       </div>
     </section>
-
   </div>
 </body>
 </html>
